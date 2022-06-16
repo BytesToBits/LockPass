@@ -3,29 +3,42 @@ import serve from 'electron-serve';
 import { createWindow } from './helpers';
 import fs from "fs"
 import path from 'path';
+import electronLogger from "electron-log"
 
 import { autoUpdater, UpdateInfo } from "electron-updater"
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
-if (isProd) {
-  // AUTO UPDATER
-  //const server = 'https://your-deployment-url.com'
-  //const url = `${server}/update/${process.platform}/${app.getVersion()}`
-
-  autoUpdater.on("update-downloaded", (info: UpdateInfo) => {
-    dialog.showMessageBox({
-      title: "New Update Available",
-      detail: `Version ${info.version} available`,
-      message: "A new version is available. Please restart to apply updates.",
-      buttons: [ 'Restart', 'Later' ]
-    }).then(returnValue => {
-      if (returnValue.response == 0) autoUpdater.quitAndInstall(true, true)
-    })
-  })
-
-  // AUTO UPDATER
+if (!isProd) {
+  electronLogger.log(app.getVersion())
 }
+
+// AUTO UPDATER
+//const server = 'https://your-deployment-url.com'
+//const url = `${server}/update/${process.platform}/${app.getVersion()}`
+autoUpdater.logger = electronLogger
+
+// @ts-ignore
+autoUpdater.logger.transports.file.level = "info"
+autoUpdater.allowPrerelease = false
+autoUpdater.autoDownload = isProd
+autoUpdater.autoInstallOnAppQuit = isProd
+
+autoUpdater.on("update-downloaded", (info: UpdateInfo) => {
+  electronLogger.log(`Version ${info.version} downloaded`)
+
+  dialog.showMessageBox({
+    title: "New Update Available",
+    detail: `Version ${info.version} available`,
+    message: "A new version is available. Please restart to apply updates.",
+    buttons: [ 'Restart', 'Later' ]
+  }).then(returnValue => {
+    if (returnValue.response == 0) autoUpdater.quitAndInstall(true, true)
+  })
+})
+
+// AUTO UPDATER
+
 const renderPage = (pageName) => isProd ? `app://./${pageName}.html` : `http://localhost:${process.argv[2]}/${pageName}`
 
 const getPasswords = () => {
@@ -66,15 +79,14 @@ if (isProd) {
 
   mainWindow.loadURL(renderPage("main"))
 
-  if(isProd) {
-    autoUpdater.on("update-available", (info: UpdateInfo) => {
-      setTimeout(() => {
-        if(mainWindow) mainWindow.webContents.send('new-update', info.version)
-      }, 6000)
-    })
+  autoUpdater.on("update-available", (info: UpdateInfo) => {
+    setTimeout(() => {
+      if(mainWindow) mainWindow.webContents.send('new-update', info.version)
+      electronLogger.log("UPDATE AVAILABLE:", info)
+    }, 6000)
+  })
 
-    autoUpdater.checkForUpdatesAndNotify()
-  }
+  autoUpdater.checkForUpdates()
 
   setInterval(() => {
     if (mainWindow) mainWindow.webContents.send('update-version', app.getVersion())
