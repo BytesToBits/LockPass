@@ -1,9 +1,13 @@
 import electronLogger from "electron-log"
 import { autoUpdater, UpdateInfo } from '@imjs/electron-differential-updater';
-import { dialog } from "electron";
+import { BrowserWindow, app } from "electron";
 
-const init = () => {
+const init = (splashWindow: BrowserWindow, mainWindow: BrowserWindow) => {
     autoUpdater.logger = electronLogger
+
+    setInterval(() => {
+        if (mainWindow) mainWindow.webContents.send('update-version', app.getVersion())
+    }, 5000)
 
     // @ts-ignore
     autoUpdater.logger.transports.file.level = "info"
@@ -11,14 +15,11 @@ const init = () => {
     autoUpdater.on("update-downloaded", (info: UpdateInfo) => {
         electronLogger.log(`Version ${info.version} downloaded`)
 
-        dialog.showMessageBox({
-            title: "New Update Available",
-            detail: `Version ${info.version} available`,
-            message: "A new version is available. Please restart to apply updates.",
-            buttons: [ 'Restart', 'Later' ]
-        }).then(returnValue => {
-            if (returnValue.response == 0) autoUpdater.quitAndInstall(true, true)
-        })
+        splashWindow.webContents.send("update-pending")
+    })
+
+    autoUpdater.on("download-progress", (progress) => {
+        splashWindow.webContents.send("update-progress", progress.percent)
     })
 }
 
