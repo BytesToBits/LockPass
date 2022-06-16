@@ -1,7 +1,7 @@
 import { AbsoluteCenter, Button, Flex, Heading, Image, Progress } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import electron, { ipcRenderer } from "electron"
+import electron from "electron"
 
 export default function SplashScreen() {
   const [loading, setLoading] = useState(true)

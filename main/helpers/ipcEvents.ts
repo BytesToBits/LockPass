@@ -1,4 +1,4 @@
-import { autoUpdater, ipcMain, Notification } from "electron";
+import { ipcMain, Notification } from "electron";
 import fs from "fs"
 import path from "path"
 
