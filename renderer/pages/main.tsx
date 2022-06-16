@@ -30,7 +30,6 @@ export default () => {
     const [passValue, setPassValue] = useState(undefined)
     const [passList, setPassList] = useState({})
     const [showPass, setShowPass] = useState(false)
-    const [outdated, setOutdated] = useState(false)
     const [version, setVersion] = useState("")
 
     const [firstFetch, setFirstFetch] = useState(false)
@@ -47,11 +46,6 @@ export default () => {
             setPasswords()
             electron.ipcRenderer.on('update-version', (event, ver) => {
                 setVersion(ver)
-                if (outdated) setVersion(`${ver} (outdated)`)
-            })
-
-            electron.ipcRenderer.on('new-update', (event, ver) => {
-                setOutdated(true)
             })
         }
         

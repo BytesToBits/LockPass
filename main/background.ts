@@ -6,6 +6,7 @@ import path from 'path';
 import electronLogger from "electron-log"
 
 import { autoUpdater, UpdateInfo } from '@imjs/electron-differential-updater';
+import updater from './helpers/updater';
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
@@ -13,31 +14,7 @@ if (!isProd) {
   electronLogger.log(app.getVersion())
 }
 
-// AUTO UPDATER
-//const server = 'https://your-deployment-url.com'
-//const url = `${server}/update/${process.platform}/${app.getVersion()}`
-autoUpdater.logger = electronLogger
-
-// @ts-ignore
-autoUpdater.logger.transports.file.level = "info"
-autoUpdater.allowPrerelease = false
-autoUpdater.autoDownload = isProd
-autoUpdater.autoInstallOnAppQuit = isProd
-
-autoUpdater.on("update-downloaded", (info: UpdateInfo) => {
-  electronLogger.log(`Version ${info.version} downloaded`)
-
-  dialog.showMessageBox({
-    title: "New Update Available",
-    detail: `Version ${info.version} available`,
-    message: "A new version is available. Please restart to apply updates.",
-    buttons: [ 'Restart', 'Later' ]
-  }).then(returnValue => {
-    if (returnValue.response == 0) autoUpdater.quitAndInstall(true, true)
-  })
-})
-
-// AUTO UPDATER
+updater.init()
 
 const renderPage = (pageName) => isProd ? `app://./${pageName}.html` : `http://localhost:${process.argv[2]}/${pageName}`
 
@@ -76,7 +53,6 @@ if (isProd) {
     show: false,
     frame: false
   })
-
   mainWindow.loadURL(renderPage("main"))
 
   autoUpdater.on("update-available", (info: UpdateInfo) => {
@@ -85,8 +61,6 @@ if (isProd) {
       electronLogger.log("UPDATE AVAILABLE:", info)
     }, 6000)
   })
-
-  autoUpdater.checkForUpdates()
 
   setInterval(() => {
     if (mainWindow) mainWindow.webContents.send('update-version', app.getVersion())
@@ -137,6 +111,8 @@ if (isProd) {
   ipcMain.handle('pass-request', async(event) => {
     return getPasswords()
   })
+
+  if(isProd) updater.check()
 
   mainWindow.on('closed', () => {
     mainWindow = null
