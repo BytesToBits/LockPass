@@ -6,13 +6,14 @@
   "author": "Nemika Hajbour <nemika@bytestobits.dev>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BytesToBits/LockPass"
+    "url": "https://github.com/BytesToBits/LockPass.git"
   },
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
     "build:all": "nextron build --all",
+    "build:prod": "nextron build --win --publish always",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {

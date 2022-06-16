@@ -73,8 +73,8 @@ if (isProd) {
   mainWindow.loadURL(renderPage("main"))
 
   setInterval(() => {
-    mainWindow.webContents.send('update-version', app.getVersion())
-  })
+    if (mainWindow) mainWindow.webContents.send('update-version', app.getVersion())
+  }, 1000)
 
   ipcMain.on('open-main', () => {
     mainWindow.show()
