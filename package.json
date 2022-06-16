@@ -1,0 +1,41 @@
+{
+  "private": true,
+  "name": "lock-pass",
+  "description": "A simple password manager",
+  "version": "1.1.0",
+  "author": "Nemika Hajbour <nemika@bytestobits.dev>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BytesToBits/LockPass"
+  },
+  "main": "app/background.js",
+  "scripts": {
+    "dev": "nextron",
+    "build": "nextron build",
+    "build:all": "nextron build --all",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.1",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "electron-serve": "^1.1.0",
+    "electron-store": "^8.0.1",
+    "electron-updater": "^5.0.1",
+    "framer-motion": "^6.3.11",
+    "lodash": "^4.17.21",
+    "react-icons": "^4.4.0",
+    "update-electron-app": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.7",
+    "@types/react": "^18.0.8",
+    "electron": "^18.2.0",
+    "electron-builder": "^23.0.3",
+    "next": "^12.1.6",
+    "nextron": "^8.1.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "typescript": "^4.6.4"
+  }
+}

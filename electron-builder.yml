@@ -1,0 +1,15 @@
+appId: com.nemika.lockpass
+productName: LockPass
+copyright: Copyright © 2022 Nemika Hajbour
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish:
+  - github
+  - bitbucket
+
