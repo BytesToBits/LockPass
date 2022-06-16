@@ -2,7 +2,7 @@
   "private": true,
   "name": "lock-pass",
   "description": "A simple password manager",
-  "version": "1.2.0",
+  "version": "1.1.0",
   "author": "Nemika Hajbour <nemika@bytestobits.dev>",
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "@chakra-ui/react": "^2.2.1",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@imjs/electron-differential-updater": "^5.1.7",
     "electron-log": "^4.4.7",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.0.1",

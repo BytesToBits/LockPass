@@ -1687,6 +1687,23 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@imjs/electron-differential-updater@^5.1.7":
+  version "5.1.7"
+  resolved "https://registry.yarnpkg.com/@imjs/electron-differential-updater/-/electron-differential-updater-5.1.7.tgz#8748f56802bb621282816206acb4364b65b0082c"
+  integrity sha512-8YCqhBkG4eeMsdUaF/THKfi9rJWzZhUQLtxRdAzyzWAVa8qTGZfecGS7QwhICv5bjvbcAri/rMnfbUoGr9DfFQ==
+  dependencies:
+    "@types/node" "^14.0.11"
+    "@types/semver" "^7.1.0"
+    app-builder-bin "^3.5.9"
+    builder-util-runtime "^8.7.1"
+    fs-extra "^9.0.1"
+    js-yaml "^3.14.0"
+    lazy-val "^1.0.4"
+    lodash.isequal "^4.5.0"
+    semver "^7.3.2"
+    watch "^1.0.2"
+    zlib "^1.0.5"
+
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz#e5d2e450306a9491e3bd77e323e38d7aff315996"
@@ -1914,6 +1931,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.0.tgz#67c7b724e1bcdd7a8821ce0d5ee184d3b4dd525a"
   integrity sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==
 
+"@types/node@^14.0.11":
+  version "14.18.21"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.21.tgz#0155ee46f6be28b2ff0342ca1a9b9fd4468bef41"
+  integrity sha512-x5W9s+8P4XteaxT/jKF0PSb7XEvo5VmqEWgsMlyeY4ZlLK8I6aH6g5TPPyDlLAep+GYf4kefb7HFyc7PAO3m+Q==
+
 "@types/node@^16.11.26", "@types/node@^16.11.7":
   version "16.11.41"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.41.tgz#88eb485b1bfdb4c224d878b7832239536aa2f813"
@@ -1951,7 +1973,7 @@
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
-"@types/semver@^7.3.6":
+"@types/semver@^7.1.0", "@types/semver@^7.3.6":
   version "7.3.10"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.3.10.tgz#5f19ee40cbeff87d916eedc8c2bfe2305d957f73"
   integrity sha512-zsv3fsC7S84NN6nPK06u79oWgrPVd0NvOyqgghV1haPaFcVxIrP4DLomRwGAXk0ui4HZA7mOcSFL98sMVW9viw==
@@ -2189,6 +2211,11 @@ app-builder-bin@4.0.0:
   resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-4.0.0.tgz#1df8e654bd1395e4a319d82545c98667d7eed2f0"
   integrity sha512-xwdG0FJPQMe0M0UA4Tz0zEB8rBJTRA5a476ZawAqiBkMv16GRK5xpXThOjMaEOFnZ6zabejjG4J3da0SXG63KA==
 
+app-builder-bin@^3.5.9:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-3.7.1.tgz#cb0825c5e12efc85b196ac3ed9c89f076c61040e"
+  integrity sha512-ql93vEUq6WsstGXD+SBLSIQw6SNnhbDEM0swzgugytMxLp3rT24Ag/jcC80ZHxiPRTdew1niuR7P3/FCrDqIjw==
+
 app-builder-lib@23.0.3:
   version "23.0.3"
   resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-23.0.3.tgz#44c90237abdc4ad9b34a24658bee022828ad6205"
@@ -2224,6 +2251,13 @@ arg@5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/arg/-/arg-5.0.1.tgz#eb0c9a8f77786cad2af8ff2b862899842d7b6adb"
   integrity sha512-e0hDa9H2Z9AwFkk2qDlwhoMYE4eToKarchkQHovNdLTCYMHZHeRjI71crOh+dio4K6u1IcwubQqo79Ga4CyAQA==
+
+argparse@^1.0.7:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
+  integrity sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
+  dependencies:
+    sprintf-js "~1.0.2"
 
 argparse@^2.0.1:
   version "2.0.1"
@@ -2451,6 +2485,14 @@ builder-util-runtime@9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-9.0.0.tgz#3a40ba7382712ccdb24471567f91d7c167e00830"
   integrity sha512-SkpEtSmTkREDHRJnxKEv43aAYp8sYWY8fxYBhGLBLOBIRXeaIp6Kv3lBgSD7uR8jQtC7CA659sqJrpSV6zNvSA==
+  dependencies:
+    debug "^4.3.2"
+    sax "^1.2.4"
+
+builder-util-runtime@^8.7.1:
+  version "8.9.2"
+  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-8.9.2.tgz#a9669ae5b5dcabfe411ded26678e7ae997246c28"
+  integrity sha512-rhuKm5vh7E0aAmT6i8aoSfEjxzdYEFX7zDApK+eNgOhjofnWb74d9SRJv0H/8nsgOkos0TZ4zxW0P8J4N7xQ2A==
   dependencies:
     debug "^4.3.2"
     sax "^1.2.4"
@@ -3103,6 +3145,11 @@ eslint-scope@5.1.1:
     esrecurse "^4.3.0"
     estraverse "^4.1.1"
 
+esprima@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.1.tgz#13b04cdb3e6c5d19df91ab6987a8695619b0aa71"
+  integrity sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==
+
 esrecurse@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/esrecurse/-/esrecurse-4.3.0.tgz#7ad7964d679abb28bee72cec63758b1c5d2c9921"
@@ -3129,6 +3176,13 @@ events@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
+
+exec-sh@^0.2.0:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/exec-sh/-/exec-sh-0.2.2.tgz#2a5e7ffcbd7d0ba2755bdecb16e5a427dfbdec36"
+  integrity sha512-FIUCJz1RbuS0FKTdaAafAByGS0CPvU3R0MeHxgtl+djzCc//F8HakL8GzmVNZanasTbTAY/3DRFA0KpVqj/eAw==
+  dependencies:
+    merge "^1.2.0"
 
 execa@5.1.1:
   version "5.1.1"
@@ -3709,6 +3763,14 @@ jest-worker@^27.4.5:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
+js-yaml@^3.14.0:
+  version "3.14.1"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.14.1.tgz#dae812fdb3825fa306609a8717383c50c36a0537"
+  integrity sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
 js-yaml@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
@@ -3907,6 +3969,11 @@ merge-stream@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/merge-stream/-/merge-stream-2.0.0.tgz#52823629a14dd00c9770fb6ad47dc6310f2c1f60"
   integrity sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==
+
+merge@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.1.tgz#38bebf80c3220a8a487b6fcfb3941bb11720c145"
+  integrity sha512-VjFo4P5Whtj4vsLzsYBu5ayHhoHJ0UqNm7ibvShmbmoz7tGi0vXaoJbGdB+GmDMLUdg8DpQXEIeVDAe8MaABvQ==
 
 mime-db@1.52.0:
   version "1.52.0"
@@ -4692,6 +4759,11 @@ sprintf-js@^1.1.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.1.2.tgz#da1765262bf8c0f571749f2ad6c26300207ae673"
   integrity sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug==
 
+sprintf-js@~1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
+  integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
+
 stat-mode@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/stat-mode/-/stat-mode-1.0.0.tgz#68b55cb61ea639ff57136f36b216a291800d1465"
@@ -5021,6 +5093,14 @@ verror@^1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+watch@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/watch/-/watch-1.0.2.tgz#340a717bde765726fa0aa07d721e0147a551df0c"
+  integrity sha512-1u+Z5n9Jc1E2c7qDO8SinPoZuHj7FgbgU1olSFoyaklduDvvtX7GMMtlE6OC9FTXq4KvNAOfj6Zu4vI1e9bAKA==
+  dependencies:
+    exec-sh "^0.2.0"
+    minimist "^1.2.0"
+
 watchpack@^2.3.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-2.4.0.tgz#fa33032374962c78113f93c7f2fb4c54c9862a5d"
@@ -5170,3 +5250,8 @@ yauzl@^2.10.0:
   dependencies:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
+
+zlib@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/zlib/-/zlib-1.0.5.tgz#6e7c972fc371c645a6afb03ab14769def114fcc0"
+  integrity sha512-40fpE2II+Cd3k8HWTWONfeKE2jL+P42iWJ1zzps5W51qcTsOUKM5Q5m2PFb0CLxlmFAaUuUdJGc3OfZy947v0w==

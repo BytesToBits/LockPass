@@ -5,7 +5,7 @@ import fs from "fs"
 import path from 'path';
 import electronLogger from "electron-log"
 
-import { autoUpdater, UpdateInfo } from 'electron-updater';
+import { autoUpdater, UpdateInfo } from '@imjs/electron-differential-updater';
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
