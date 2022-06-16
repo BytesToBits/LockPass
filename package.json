@@ -13,7 +13,6 @@
     "dev": "nextron",
     "build": "nextron build",
     "build:all": "nextron build --all",
-    "build:prod": "nextron build --publish always",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
