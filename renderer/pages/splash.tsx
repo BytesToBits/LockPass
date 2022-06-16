@@ -1,17 +1,31 @@
-import { AbsoluteCenter, Button, Flex, Heading, Image } from "@chakra-ui/react";
+import { AbsoluteCenter, Button, Flex, Heading, Image, Progress } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import electron from "electron"
+import electron, { ipcRenderer } from "electron"
 
 export default function SplashScreen() {
   const [loading, setLoading] = useState(true)
+  const [loadingText, setLoadingText] = useState("Loading...")
+  const [downloadProgress, setDownloadProgress] = useState(null)
+  const [firstFetch, FirstFetch] = useState(false)
 
   useEffect(() => {
-    document.getElementsByTagName("body")[0].className = "e-drag"
+    if (!firstFetch) {
+      FirstFetch(true)
+      document.getElementsByTagName("body")[0].className = "e-drag"
 
-    setTimeout(() => {
-      setLoading(false)
-    }, 4500)
+      setTimeout(() => {
+        electron.ipcRenderer.on('load-window', () => setLoading(false))
+        electron.ipcRenderer.on('update-progress', (event, progress) => {
+          setLoadingText("Downloading update...")
+          setDownloadProgress(progress)
+        })
+        electron.ipcRenderer.send('check-updates')
+        setLoadingText("Checking for updates...")
+
+        if (process.env.NODE_ENV == "development") setLoading(false)
+      }, 4500)
+    }
   })
 
   return (
@@ -23,6 +37,7 @@ export default function SplashScreen() {
         <Button
           className="e-nodrag"
           isLoading={loading}
+          loadingText={loadingText}
           cursor="pointer"
           variant="ghost"
           bg="green"
@@ -39,6 +54,10 @@ export default function SplashScreen() {
         >
             Open Manager
         </Button>
+
+        {downloadProgress && (
+          <Progress mt={5} w="50%" rounded="md" hasStripe value={downloadProgress} isAnimated colorScheme="green" />
+        )}
       </Flex>
     </AbsoluteCenter>
   );

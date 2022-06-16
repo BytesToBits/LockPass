@@ -1,10 +1,17 @@
 import { app, ipcMain } from 'electron';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
-import electronLogger from "electron-log"
-
+import electronLogger from "electron-log";
+import { autoUpdater, UpdateInfo } from "@imjs/electron-differential-updater"
 import ipcEvents from './helpers/ipcEvents';
-import updater from './helpers/updater';
+
+// AUTO UPDATER
+autoUpdater.logger = electronLogger
+
+// @ts-ignore
+autoUpdater.logger.transports.file.level = "info"
+// AUTO UPDATER
+
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
@@ -22,6 +29,8 @@ if (isProd) {
 
 (async () => {
   await app.whenReady();
+  
+  ipcEvents.init()
 
   const splashWindow = createWindow('splash', {
     width: 400,
@@ -42,11 +51,35 @@ if (isProd) {
   })
   mainWindow.loadURL(renderPage("main"))
 
-  updater.init(splashWindow, mainWindow)
-  ipcEvents.init()
-  if(isProd) updater.check()
+  setInterval(() => {
+      if (mainWindow) mainWindow.webContents.send('update-version', app.getVersion())
+  }, 5000)
 
-  splashWindow.on('ready-to-show', () => splashWindow.show)
+  autoUpdater.on("update-not-available", () => {
+    splashWindow.webContents.send("load-window")
+  })
+
+  autoUpdater.on("error", () => {
+      splashWindow.webContents.send("load-window")
+  })
+
+  autoUpdater.on("update-downloaded", (info: UpdateInfo) => {
+      electronLogger.log(`Version ${info.version} downloaded`)
+      autoUpdater.quitAndInstall()
+  })
+
+  autoUpdater.on("download-progress", (progress) => {
+      splashWindow.webContents.send("update-progress", progress.percent)
+  })
+
+  if(isProd) {
+    ipcMain.on('check-updates', () => {
+      if(isProd) { autoUpdater.checkForUpdates() }
+      else { splashWindow.webContents.send('load-window') }
+    })
+  }
+
+  splashWindow.show()
 
   ipcMain.on('open-main', () => {
     mainWindow.show()

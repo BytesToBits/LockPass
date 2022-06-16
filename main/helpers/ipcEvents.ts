@@ -48,8 +48,6 @@ const init = () => {
         })
         notif.show()
     })
-
-    ipcMain.on('restart-update', () => { autoUpdater.quitAndInstall() })
     
     ipcMain.handle('pass-request', async(event) => {
         return getPasswords()

@@ -6,3 +6,4 @@ dist
 electron-builder.yml
 dev-app-update.yml
 .env
+passwords.json
