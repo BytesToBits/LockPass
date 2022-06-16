@@ -47,9 +47,10 @@ if (isProd) {
   await app.whenReady();
 
   if(isProd) {
+    autoUpdater.checkForUpdates()
     setInterval(() => {
       autoUpdater.checkForUpdates()
-    }, 10000)
+    }, 1000*60*5)
   }
 
   const splashWindow = createWindow('splash', {
@@ -74,7 +75,7 @@ if (isProd) {
 
   setInterval(() => {
     if (mainWindow) mainWindow.webContents.send('update-version', app.getVersion())
-  }, 1000)
+  }, 5000)
 
   ipcMain.on('open-main', () => {
     mainWindow.show()
