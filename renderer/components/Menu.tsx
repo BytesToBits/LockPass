@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Image } from "@chakra-ui/react"
+import { Flex, Icon, Image } from "@chakra-ui/react"
 import { FaTimes, FaRegWindowMaximize, FaRegWindowMinimize } from "react-icons/fa"
 import electron from "electron"
 
