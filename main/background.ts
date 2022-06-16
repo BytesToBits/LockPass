@@ -46,13 +46,6 @@ if (isProd) {
 (async () => {
   await app.whenReady();
 
-  if(isProd) {
-    autoUpdater.checkForUpdates()
-    setInterval(() => {
-      autoUpdater.checkForUpdates()
-    }, 1000*60*5)
-  }
-
   const splashWindow = createWindow('splash', {
     width: 400,
     height: 500,
@@ -72,6 +65,16 @@ if (isProd) {
   })
 
   mainWindow.loadURL(renderPage("main"))
+
+  if(isProd) {
+    autoUpdater.on("update-available", (info: UpdateInfo) => {
+      setTimeout(() => {
+        if(mainWindow) mainWindow.webContents.send('new-update', info.version)
+      }, 6000)
+    })
+
+    autoUpdater.checkForUpdatesAndNotify()
+  }
 
   setInterval(() => {
     if (mainWindow) mainWindow.webContents.send('update-version', app.getVersion())
