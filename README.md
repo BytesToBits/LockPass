@@ -7,8 +7,8 @@
 > *LockPass is a simple passsword manager made using [Electron](https://electronjs.org/) + [Next.js](https://nextjs.org/) ([Nextron](https://github.com/saltyshiomix/nextron/)).*
 
 ## How it works
-- Head over to the [Releases](https://github.com/BytesToBits/LockPass/releases) tab and download the latest version. The file you must downlaod must be formatted like so: `LockPass-Setup-[VERSION].exe`
-- Run the downlaoded file. Chrome and Windows might try to prevent its download, but you can discard the alerts if you wish. There are no threats in the applications whatsoever.
+- Head over to the [Releases](https://github.com/BytesToBits/LockPass/releases) tab and download the latest version. The file you must download must be formatted like so: `LockPass-Setup-[VERSION].exe`
+- Run the downloaded file. Chrome and Windows might try to prevent its download, but you can discard the alerts if you wish. There are no threats in the applications whatsoever.
 - Whenever there is a new release, the application will update automatically.
 - Passwords are saved __locally__, so there is no fear of having them leaked online.
 
