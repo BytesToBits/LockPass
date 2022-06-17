@@ -1,12 +1,23 @@
 import { randomUUID } from "crypto";
 import { ipcMain, Notification } from "electron";
-import fs from "fs";
 import path from "path";
+import Store from "electron-store";
+
+const passwordStore = new Store({
+  name: 'passwords'
+})
 
 const init = () => {
+  Store.initRenderer()
+
   const getPasswords = () => {
     try {
-      let passwords = JSON.parse(fs.readFileSync("passwords.json").toString());
+      const passRecord = passwordStore.store
+      const passwords = {}
+      for(let id in passRecord) {
+        passwords[id] = passRecord[id]
+      }
+
       return passwords;
     } catch (e) {
       return {};
@@ -14,9 +25,6 @@ const init = () => {
   };
 
   ipcMain.on("new-password", (event, password) => {
-    console.log(password);
-    const passwords = getPasswords();
-
     if (!password.label || !password.value) {
       const notif = new Notification({
         title: "Password not saved",
@@ -27,21 +35,19 @@ const init = () => {
       return;
     }
 
-    // TODO: Provide a better way of storing user passwords
+    // TODO: Provide a more secure way of storing user passwords
     // Unique ID for the key to prevent duplicates when referenced by key
     const uniqueID = randomUUID();
-    passwords[uniqueID] = {
+
+    passwordStore.set(uniqueID, {
       label: password.label,
       name: password.name ? password.name : "No Username",
       value: password.value,
-    };
-    fs.writeFileSync("passwords.json", JSON.stringify(passwords));
+    })
   });
 
   ipcMain.on("delete-pass", (event, uuid) => {
-    const passwords = getPasswords();
-    delete passwords[uuid];
-    fs.writeFileSync("passwords.json", JSON.stringify(passwords));
+    passwordStore.delete(uuid)
   });
 
   ipcMain.handle("pass-request", async (event) => {
