@@ -18,10 +18,10 @@ const init = () => {
     console.log(password);
     const passwords = getPasswords();
 
-    if (!password.name || !password.value) {
+    if (!password.label || !password.value) {
       const notif = new Notification({
         title: "Password not saved",
-        body: `Password ${password.name} was saved unsuccessfully! Make sure the password's name AND value are set.`,
+        body: `Password was saved unsuccessfully! Make sure the password's label AND value are set.`,
         icon: "resources/icon.ico",
       });
       notif.show();
@@ -32,8 +32,8 @@ const init = () => {
     // Unique ID for the key to prevent duplicates when referenced by key
     const uniqueID = randomUUID();
     passwords[uniqueID] = {
-      label: password.label ? password.label : "No Label",
-      name: password.name,
+      label: password.label,
+      name: password.name ? password.name : "No Username",
       value: password.value,
     };
     fs.writeFileSync("passwords.json", JSON.stringify(passwords));
