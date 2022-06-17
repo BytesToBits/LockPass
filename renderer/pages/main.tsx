@@ -16,17 +16,19 @@ import {
   Th,
   Thead,
   Tr,
+  useClipboard,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import BaseLayout from "../components/BaseLayout";
-import electron, { clipboard } from "electron";
+import electron from "electron";
 import _ from "lodash";
 
-export const PasswordView = ({ label, name, value, setPassList }) => {
+export const PasswordView = ({ label, name, value, uuid, setPassList }) => {
   const [show, setShow] = useState(false);
+  const { hasCopied, onCopy } = useClipboard(value);
 
   const handleDelete = async () => {
-    electron.ipcRenderer.send("delete-pass", name);
+    electron.ipcRenderer.send("delete-pass", uuid);
     const passwords = await electron.ipcRenderer.invoke("pass-request");
     setPassList(passwords);
   };
@@ -43,8 +45,8 @@ export const PasswordView = ({ label, name, value, setPassList }) => {
         <Button mr={2} colorScheme="red" onClick={handleDelete}>
           Delete
         </Button>
-        <Button colorScheme="green" onClick={() => clipboard.writeText(value)}>
-          Copy
+        <Button colorScheme="green" onClick={onCopy}>
+          {hasCopied ? "Copied" : "Copy"}
         </Button>
       </Td>
     </Tr>
@@ -58,7 +60,6 @@ export default () => {
   const [passList, setPassList] = useState({});
   const [showPass, setShowPass] = useState(false);
   const [version, setVersion] = useState("");
-
   const [firstFetch, setFirstFetch] = useState(false);
 
   useEffect(() => {
@@ -171,6 +172,7 @@ export default () => {
                   label={passList[uuid].label}
                   name={passList[uuid].name}
                   value={passList[uuid]["value"]}
+                  uuid={uuid}
                   setPassList={setPassList}
                 />
               ))}

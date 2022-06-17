@@ -40,7 +40,7 @@ const init = () => {
 
     const notif = new Notification({
       title: "Password Saved",
-      body: `New Password ${password.name} was saved!`,
+      body: `New Password was saved!`,
       icon: "resources/icon.ico",
     });
     notif.show();
@@ -49,12 +49,13 @@ const init = () => {
 
   ipcMain.on("delete-pass", (event, uuid) => {
     const passwords = getPasswords();
+    const label = passwords[uuid].label;
     delete passwords[uuid];
     fs.writeFileSync("passwords.json", JSON.stringify(passwords));
 
     const notif = new Notification({
       title: "Password Deleted",
-      body: `New Password ${name} was deleted!`,
+      body: `New Password for ${label} was deleted!`,
       icon: path.join(
         __dirname,
         "..",
