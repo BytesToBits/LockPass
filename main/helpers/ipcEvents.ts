@@ -1,7 +1,6 @@
 import { randomUUID } from "crypto";
 import { ipcMain, Notification } from "electron";
 import fs from "fs";
-import { uniqueId } from "lodash";
 import path from "path";
 
 const init = () => {
@@ -22,7 +21,7 @@ const init = () => {
       const notif = new Notification({
         title: "Password not saved",
         body: `Password was saved unsuccessfully! Make sure the password's label AND value are set.`,
-        icon: "resources/icon.ico",
+        icon: path.join(__dirname, '..', 'resources', 'icon.ico'),
       });
       notif.show();
       return;
@@ -37,35 +36,12 @@ const init = () => {
       value: password.value,
     };
     fs.writeFileSync("passwords.json", JSON.stringify(passwords));
-
-    const notif = new Notification({
-      title: "Password Saved",
-      body: `New Password was saved!`,
-      icon: "resources/icon.ico",
-    });
-    notif.show();
-    return;
   });
 
   ipcMain.on("delete-pass", (event, uuid) => {
     const passwords = getPasswords();
-    const label = passwords[uuid].label;
     delete passwords[uuid];
     fs.writeFileSync("passwords.json", JSON.stringify(passwords));
-
-    const notif = new Notification({
-      title: "Password Deleted",
-      body: `New Password for ${label} was deleted!`,
-      icon: path.join(
-        __dirname,
-        "..",
-        "renderer",
-        "public",
-        "images",
-        "icon.png"
-      ),
-    });
-    notif.show();
   });
 
   ipcMain.handle("pass-request", async (event) => {
