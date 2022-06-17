@@ -1,4 +1,4 @@
-import { AbsoluteCenter, Button, Flex, Heading, Image, Progress } from "@chakra-ui/react";
+import { AbsoluteCenter, Button, Flex, Heading, Image, Progress, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import electron from "electron"
@@ -6,7 +6,7 @@ import electron from "electron"
 export default function SplashScreen() {
   const [loading, setLoading] = useState(true)
   const [loadingText, setLoadingText] = useState("Loading...")
-  const [downloadProgress, setDownloadProgress] = useState(null)
+  const [downloadProgressData, setDownloadProgressData] = useState(null)
   const [firstFetch, FirstFetch] = useState(false)
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function SplashScreen() {
         electron.ipcRenderer.on('load-window', () => setLoading(false))
         electron.ipcRenderer.on('update-progress', (event, progress) => {
           setLoadingText("Downloading update...")
-          setDownloadProgress(progress)
+          setDownloadProgressData(progress)
         })
         electron.ipcRenderer.send('check-updates')
         setLoadingText("Checking for updates...")
@@ -52,11 +52,16 @@ export default function SplashScreen() {
 
           onClick={() => electron.ipcRenderer.send('open-main')}
         >
-            Open Manager
+          Open Manager
         </Button>
 
-        {downloadProgress && (
-          <Progress mt={5} w="50%" rounded="md" hasStripe value={downloadProgress} isAnimated colorScheme="green" />
+        {downloadProgressData && (
+          <>
+            <Progress mt={5} w="50%" rounded="md" hasStripe value={downloadProgressData.percent} isAnimated colorScheme="green" />
+            <Text textAlign={"center"} fontStyle="italic" fontSize="14px" color="gray">
+              {downloadProgressData.transferred}/{downloadProgressData.total} ({(downloadProgressData.bytesPerSecond/1000000).toFixed(2)} mb/s)
+            </Text>
+          </>
         )}
       </Flex>
     </AbsoluteCenter>

@@ -29,6 +29,7 @@ export default function Menu() {
                 className={"e-drag"}
                 justifyContent={"space-between"}
                 alignItems={"center"}
+                zIndex={9999}
             >
                 <Image src="/images/icon.png" boxSize="20px" m={2} />
 

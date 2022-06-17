@@ -69,7 +69,7 @@ if (isProd) {
   })
 
   autoUpdater.on("download-progress", (progress) => {
-      splashWindow.webContents.send("update-progress", progress.percent)
+      splashWindow.webContents.send("update-progress", progress)
   })
 
   if(isProd) {
