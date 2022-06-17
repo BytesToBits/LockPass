@@ -43,7 +43,7 @@ if (isProd) {
   await splashWindow.loadURL(renderPage("splash"))
 
   let mainWindow = createWindow('main', {
-    minWidth: 400,
+    minWidth: 650,
     minHeight: 400,
     center: true,
     show: false,
