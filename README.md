@@ -44,6 +44,6 @@ Once you are done with your contribution, create a [Pull Request](https://github
 <center style="margin-top:30px">
 <h1><strong><em>💖 CONTRIBUTORS 💖</em></strong></h1>
 <a href="https://github.com/BytesToBits/LockPass/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=bytestobits/LockPass" />
+  <img src="https://contrib.rocks/image?repo=BytesToBits/LockPass" />
 </a>
 </center>
