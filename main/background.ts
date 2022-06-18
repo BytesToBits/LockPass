@@ -4,6 +4,7 @@ import { createWindow } from './helpers';
 import electronLogger from "electron-log";
 import { autoUpdater, UpdateInfo } from "@imjs/electron-differential-updater"
 import ipcEvents from './helpers/ipcEvents';
+import tray from './helpers/tray';
 
 // AUTO UPDATER
 autoUpdater.logger = electronLogger
@@ -30,6 +31,7 @@ if (isProd) {
 (async () => {
   await app.whenReady();
   
+  tray.init()
   ipcEvents.init()
 
   const splashWindow = createWindow('splash', {
