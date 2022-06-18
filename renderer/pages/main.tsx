@@ -6,7 +6,10 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  Icon,
   Input,
+  InputGroup,
+  InputRightAddon,
   Table,
   TableCaption,
   TableContainer,
@@ -21,17 +24,13 @@ import {
 import { useEffect, useState } from "react";
 import BaseLayout from "../components/BaseLayout";
 import electron from "electron";
-import _ from "lodash";
+import passwords from "../util/passwords";
+
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
 
 export const PasswordView = ({ label, name, value, uuid, setPassList }) => {
   const [show, setShow] = useState(false);
   const { hasCopied, onCopy } = useClipboard(value);
-
-  const handleDelete = async () => {
-    electron.ipcRenderer.send("delete-pass", uuid);
-    const passwords = await electron.ipcRenderer.invoke("pass-request");
-    setPassList(passwords);
-  };
 
   return (
     <Tr>
@@ -42,7 +41,7 @@ export const PasswordView = ({ label, name, value, uuid, setPassList }) => {
         <Button mr={2} colorScheme="orange" onClick={() => setShow(!show)}>
           Toggle Show
         </Button>
-        <Button mr={2} colorScheme="red" onClick={handleDelete}>
+        <Button mr={2} colorScheme="red" onClick={async () => setPassList(await passwords.delete(uuid))}>
           Delete
         </Button>
         <Button colorScheme="green" onClick={onCopy}>
@@ -73,35 +72,13 @@ export default () => {
     if (!firstFetch) {
       setPasswords();
 
-      setInterval(async() => {
+      setInterval(async () => {
         const ver = await electron.ipcRenderer.invoke("get-version")
         console.log(ver)
         setVersion(ver)
       }, 5000)
     }
   });
-
-  const handleAdd = async () => {
-    electron.ipcRenderer.send("new-password", {
-      label: passLabel,
-      name: passName,
-      value: passValue,
-    });
-
-    const passwords = await electron.ipcRenderer.invoke("pass-request");
-    setPassList(passwords);
-  };
-
-  const handleGen = () => {
-    const CHARS =
-      "1234567890-=_+asdfghjkl;zxcvbnm,.!@#$%^&*()ASDFGHJKLZXCVBNM<>?";
-    let password = "";
-    for (let i = 0; i < _.range(12, 25)[Math.floor(Math.random() * 12)]; i++) {
-      password += CHARS[Math.floor(Math.random() * CHARS.length)];
-    }
-
-    setPassValue(password);
-  };
 
   return (
     <BaseLayout>
@@ -129,28 +106,25 @@ export default () => {
             onChange={(e) => setPassName(e.target.value)}
           />
           <FormLabel htmlFor="password">Password</FormLabel>
-          <Input
-            value={passValue}
-            bottom={2}
-            id="password"
-            type={showPass ? "text" : "password"}
-            placeholder="•••••••••••••"
-            onChange={(e) => setPassValue(e.target.value)}
-          />
-          <Checkbox
-            mt={2}
-            defaultChecked={showPass}
-            onChange={() => setShowPass(!showPass)}
-          >
-            Show Password?
-          </Checkbox>
+          <InputGroup bottom={2}>
+            <Input
+              value={passValue}
+              id="password"
+              type={showPass ? "text" : "password"}
+              placeholder="•••••••••••••"
+              onChange={(e) => setPassValue(e.target.value)}
+            />
+            <InputRightAddon cursor="pointer" onClick={() => setShowPass(!showPass)}>
+              <Icon as={showPass ? AiFillEye : AiFillEyeInvisible} />
+            </InputRightAddon>
+          </InputGroup>
         </FormControl>
         <Divider my={2} />
         <Flex gap={2} alignSelf="start">
-          <Button colorScheme="green" variant="outline" onClick={handleAdd}>
+          <Button colorScheme="green" variant="outline" onClick={async () => setPassList(await passwords.save({ label: passLabel, name: passName, value: passValue }))}>
             Create new password
           </Button>
-          <Button colorScheme="orange" variant="outline" onClick={handleGen}>
+          <Button colorScheme="orange" variant="outline" onClick={() => setPassValue(passwords.generate())}>
             Generate new password
           </Button>
         </Flex>
