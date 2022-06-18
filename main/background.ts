@@ -51,10 +51,6 @@ if (isProd) {
   })
   mainWindow.loadURL(renderPage("main"))
 
-  setInterval(() => {
-      if (mainWindow) mainWindow.webContents.send('update-version', app.getVersion())
-  }, 5000)
-
   autoUpdater.on("update-not-available", () => {
     splashWindow.webContents.send("load-window")
   })

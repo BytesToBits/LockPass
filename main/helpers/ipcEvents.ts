@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { ipcMain, Notification } from "electron";
+import { app, ipcMain, Notification } from "electron";
 import path from "path";
 import Store from "electron-store";
 
@@ -53,6 +53,10 @@ const init = () => {
   ipcMain.handle("pass-request", async (event) => {
     return getPasswords();
   });
+
+  ipcMain.handle("get-version", async(event) => {
+    return app.getVersion()
+  })
 };
 
 export default {

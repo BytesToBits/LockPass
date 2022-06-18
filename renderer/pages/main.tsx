@@ -72,9 +72,12 @@ export default () => {
 
     if (!firstFetch) {
       setPasswords();
-      electron.ipcRenderer.on("update-version", (event, ver) => {
-        setVersion(ver);
-      });
+
+      setInterval(async() => {
+        const ver = await electron.ipcRenderer.invoke("get-version")
+        console.log(ver)
+        setVersion(ver)
+      }, 5000)
     }
   });
 
