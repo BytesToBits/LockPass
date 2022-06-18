@@ -57,6 +57,7 @@ export default () => {
   const [passName, setPassName] = useState(undefined);
   const [passValue, setPassValue] = useState(undefined);
   const [passList, setPassList] = useState({});
+  const [passStrength, setPassStrength] = useState(0)
   const [showPass, setShowPass] = useState(false);
   const [version, setVersion] = useState("");
   const [firstFetch, setFirstFetch] = useState(false);
@@ -82,43 +83,49 @@ export default () => {
 
   return (
     <BaseLayout>
-      <Flex direction="column" m={5} justifyContent="center" alignItems="left">
+      <Flex direction="column" m={5} justifyContent="center" alignItems="left" gap={4}>
         <Heading size="lg" marginY={"20px"}>
           New password information:
         </Heading>
-        <FormControl>
-          <FormLabel htmlFor="label">Label</FormLabel>
+
+        <FormControl variant="floating" isRequired>
           <Input
+            placeholder={" "}
             value={passLabel}
-            bottom={2}
-            id="label"
             type="text"
-            placeholder="GitHub"
             onChange={(e) => setPassLabel(e.target.value)}
           />
-          <FormLabel htmlFor="username">Username</FormLabel>
+          <FormLabel>Label</FormLabel>
+        </FormControl>
+
+        <FormControl variant="floating">
           <Input
             value={passName}
-            bottom={2}
-            id="username"
             type="text"
-            placeholder="JohnSmith03"
+            placeholder=" "
             onChange={(e) => setPassName(e.target.value)}
           />
-          <FormLabel htmlFor="password">Password</FormLabel>
-          <InputGroup bottom={2}>
+          <FormLabel>Username</FormLabel>
+        </FormControl>
+
+        <FormControl variant="floating" isRequired>
+          <InputGroup>
             <Input
               value={passValue}
-              id="password"
               type={showPass ? "text" : "password"}
-              placeholder="•••••••••••••"
-              onChange={(e) => setPassValue(e.target.value)}
+              placeholder=" "
+              onChange={(e) => {
+                setPassValue(e.target.value)
+                setPassStrength(passwords.strength(e.target.value))
+              }}
             />
+            <FormLabel>Password</FormLabel>
             <InputRightAddon cursor="pointer" onClick={() => setShowPass(!showPass)}>
               <Icon as={showPass ? AiFillEye : AiFillEyeInvisible} />
             </InputRightAddon>
           </InputGroup>
         </FormControl>
+
         <Divider my={2} />
         <Flex gap={2} alignSelf="start">
           <Button colorScheme="green" variant="outline" onClick={async () => setPassList(await passwords.save({ label: passLabel, name: passName, value: passValue }))}>

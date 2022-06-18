@@ -1,5 +1,6 @@
 import { extendTheme } from "@chakra-ui/react"
 import { createBreakpoints } from "@chakra-ui/theme-tools"
+import Form from "../components/extentions/Form"
 
 const breakpoints = createBreakpoints({
   xs: "25em",
@@ -9,6 +10,10 @@ const breakpoints = createBreakpoints({
   xl: "80em",
   "2xl": "96em",
 })
+
+const components = {
+    Form
+}
 
 const colors = {
     background: "#0e0e0e",
@@ -43,7 +48,8 @@ const theme = extendTheme({
     fonts,
     breakpoints,
     styles,
-    colors
+    colors,
+    components
 })
 
 export default theme
