@@ -1,13 +1,15 @@
-import { Tray, Menu } from "electron"
-import path from "path"
+import { Tray, Menu, nativeImage } from "electron"
+import util from "../util"
 
-const init = () => {
-    const tray = new Tray(path.join(__dirname, '..', 'resources', 'icon.ico'))
+const init = async() => {
+    const icon = nativeImage.createFromPath(util.getAsset("icon.ico"))
+    const tray = new Tray(icon)
     
     const contextMenu = Menu.buildFromTemplate([
         { type: "separator" },
         { label: "Exit LockPass", role: "quit" }
     ])
+
     tray.setToolTip("LockPass")
     tray.setContextMenu(contextMenu)
 }

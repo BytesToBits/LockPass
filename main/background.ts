@@ -5,6 +5,7 @@ import electronLogger from "electron-log";
 import { autoUpdater, UpdateInfo } from "@imjs/electron-differential-updater"
 import ipcEvents from './helpers/ipcEvents';
 import tray from './helpers/tray';
+import util, { isProd } from './util';
 
 // AUTO UPDATER
 autoUpdater.logger = electronLogger
@@ -13,14 +14,9 @@ autoUpdater.logger = electronLogger
 autoUpdater.logger.transports.file.level = "info"
 // AUTO UPDATER
 
-
-const isProd: boolean = process.env.NODE_ENV === 'production';
-
 if (!isProd) {
   electronLogger.log(app.getVersion())
 }
-
-const renderPage = (pageName) => isProd ? `app://./${pageName}.html` : `http://localhost:${process.argv[2]}/${pageName}`
 
 if (isProd) {
   serve({ directory: 'app' });
@@ -30,9 +26,6 @@ if (isProd) {
 
 (async () => {
   await app.whenReady();
-  
-  tray.init()
-  ipcEvents.init()
 
   const splashWindow = createWindow('splash', {
     width: 400,
@@ -42,7 +35,7 @@ if (isProd) {
     center: true,
     show: false
   });
-  await splashWindow.loadURL(renderPage("splash"))
+  await splashWindow.loadURL(util.renderPage("splash"))
 
   let mainWindow = createWindow('main', {
     minWidth: 650,
@@ -51,7 +44,7 @@ if (isProd) {
     show: false,
     frame: false
   })
-  mainWindow.loadURL(renderPage("main"))
+  mainWindow.loadURL(util.renderPage("main"))
 
   autoUpdater.on("update-not-available", () => {
     splashWindow.webContents.send("load-window")
@@ -77,8 +70,6 @@ if (isProd) {
     })
   }
 
-  splashWindow.show()
-
   ipcMain.on('open-main', () => {
     mainWindow.show()
     splashWindow.close()
@@ -86,8 +77,7 @@ if (isProd) {
 
   mainWindow.on('closed', () => {
     mainWindow = null
-  })
-  
+  }) 
 
   ipcMain.on('close-app', app.quit)
   ipcMain.on('minimize-app', () => {
@@ -118,6 +108,12 @@ if (isProd) {
       mainWindow.maximize()
     }
   })
+
+  splashWindow.show()
+
+  await tray.init()
+  ipcEvents.init()
+  
 
 })();
 

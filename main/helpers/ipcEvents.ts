@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { app, ipcMain, Notification } from "electron";
-import path from "path";
 import Store from "electron-store";
+import util from "../util";
 
 const passwordStore = new Store({
   name: 'passwords'
@@ -29,7 +29,7 @@ const init = () => {
       const notif = new Notification({
         title: "Password not saved",
         body: `Password was saved unsuccessfully! Make sure the password's label AND value are set.`,
-        icon: path.join(__dirname, '..', 'resources', 'icon.ico'),
+        icon: util.getAsset("icon.ico"),
       });
       notif.show();
       return;
