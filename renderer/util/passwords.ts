@@ -12,6 +12,9 @@ export default {
     
         return password
       },
+    getAll: async() => {
+      return await ipcRenderer.invoke("pass-request");
+    },
     save: async(passwordData) => {
         ipcRenderer.send("new-password", passwordData);
       
