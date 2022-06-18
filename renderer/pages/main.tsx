@@ -180,7 +180,7 @@ export default () => {
         right="5px"
         userSelect="none"
       >
-        Version: {version}
+        Version: {version} <a href="/new_main">(VIEW NEW)</a>
       </Text>
     </BaseLayout>
   );
