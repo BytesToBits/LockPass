@@ -144,7 +144,7 @@ export default () => {
                             <Box>
                                 <Text fontWeight="bold">{key}</Text>
                                 <Box>
-                                    {displayList[key].map((uuid) => <PassBox uuid={uuid} data={passList[uuid]} filter={searchFilter} />)}
+                                    {displayList[key].filter((uuid) => searchFilter ? passList[uuid].label.includes(searchFilter) : true).map((uuid) => <PassBox uuid={uuid} data={passList[uuid]} filter={searchFilter} />)}
                                 </Box>
                             </Box>
                         ))}
