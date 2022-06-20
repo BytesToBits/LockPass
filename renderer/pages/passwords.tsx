@@ -158,6 +158,8 @@ export default () => {
                     minH="calc(100vh - 30px)"
                     maxW="calc(100% - 350px)"
                     maxH="calc(100vh - 30px)"
+                    overflowY="auto"
+                    overflowX={"hidden"}
                 >
                     {selected && <ManagePassword data={passList[selected]} uuid={selected} setSelected={setSelected} />}
                 </Flex>
