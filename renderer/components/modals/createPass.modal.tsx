@@ -47,6 +47,14 @@ export default ({ isOpen, onClose }) => {
         setLoading(false)
 
         onClose()
+
+        setLabel("")
+        setValue("")
+        setEmail("")
+        setWebsite("")
+        setNotes("")
+        setUsername("")
+        setIcon(undefined)
     }
 
     return (
