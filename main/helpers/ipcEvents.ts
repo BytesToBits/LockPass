@@ -3,6 +3,7 @@ import { app, dialog, ipcMain, Notification } from "electron";
 import Store from "electron-store";
 import files from "./files";
 import util from "../util";
+import { PasswordData } from "../../renderer/util/interfaces";
 
 const passwordStore = new Store({
   name: 'passwords'
@@ -15,7 +16,7 @@ const init = () => {
     try {
       const passRecord = passwordStore.store
       const passwords = {}
-      for(let id in passRecord) {
+      for (let id in passRecord) {
         passwords[id] = passRecord[id]
       }
 
@@ -33,11 +34,11 @@ const init = () => {
     return getPasswords();
   });
 
-  ipcMain.handle("get-version", async() => {
+  ipcMain.handle("get-version", async () => {
     return app.getVersion()
   })
 
-  ipcMain.handle("save-password", async(_, password) => {
+  ipcMain.handle("save-password", async (_, password) => {
     if (!password.label || !password.value) {
       const notif = new Notification({
         title: "Password not saved",
@@ -57,9 +58,23 @@ const init = () => {
     return true
   });
 
-  ipcMain.handle("select-file", async() => files.select())
+  ipcMain.handle("edit-password", async (_, uuid, password: PasswordData) => {
+    if (!password.label || !password.value) {
+      const notif = new Notification({
+        title: "Password not edited",
+        body: `Password label & value are required.`,
+        icon: util.getAsset("icon.ico"),
+      });
+      notif.show();
+      return;
+    }
+    
+    passwordStore.set(uuid, password)
+  })
 
-  ipcMain.handle("save-file", async(_, path) => files.save(path, "testPy.png"))
+  ipcMain.handle("select-file", async (_, options) => files.select(options))
+
+  ipcMain.handle("save-file", async (_, path) => files.save(path, "testPy.png"))
 };
 
 export default {

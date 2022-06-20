@@ -16,6 +16,13 @@ export default {
       return await ipcRenderer.invoke("pass-request");
     },
     save: async(passwordData) => await ipcRenderer.invoke("save-password", passwordData),
+    edit: async(uuid, passwordData) => {
+      const newData = passwordData
+      newData.edit = {
+        lastModified: new Date().getTime()
+      }
+      await ipcRenderer.invoke("edit-password", uuid, newData)
+    },
     delete: async (uuid) => {
         ipcRenderer.send("delete-pass", uuid);
         const passwords = await ipcRenderer.invoke("pass-request");

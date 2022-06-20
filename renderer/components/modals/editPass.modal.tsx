@@ -3,22 +3,22 @@ import { ipcRenderer, nativeImage } from "electron"
 import { useState } from "react"
 import passwords from "../../util/passwords"
 
-import { AiFillEyeInvisible, AiFillEye, AiOutlinePlus } from "react-icons/ai"
+import { AiFillEyeInvisible, AiFillEye, AiOutlinePlus, AiFillEdit } from "react-icons/ai"
 import { ImFolderUpload } from "react-icons/im"
 import { IoDice } from "react-icons/io5";
 import util from "../../util/util"
 
-export default ({ isOpen, onClose }) => {
+export default ({ isOpen, onClose, uuid, data }) => {
     const [loading, setLoading] = useState(false)
     const [showPass, setShowPass] = useState(false)
 
-    const [label, setLabel] = useState("")
-    const [value, setValue] = useState("")
-    const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("")
-    const [website, setWebsite] = useState("")
-    const [notes, setNotes] = useState("")
-    const [icon, setIcon] = useState(undefined)
+    const [label, setLabel] = useState(data.label)
+    const [value, setValue] = useState(data.value)
+    const [username, setUsername] = useState(data.username)
+    const [email, setEmail] = useState(data.email)
+    const [website, setWebsite] = useState(data.website)
+    const [notes, setNotes] = useState(data.notes)
+    const [icon, setIcon] = useState(data.icon)
 
 
     const handleSelect = async () => {
@@ -35,22 +35,14 @@ export default ({ isOpen, onClose }) => {
         }
     }
 
-    const handleAdd = async () => {
+    const handleEdit = async () => {
         setLoading(true)
 
-        await passwords.save({ label, value, username, email, website, notes, icon })
+        await passwords.edit(uuid, { label, value, username, email, website, notes, icon })
 
         setLoading(false)
 
         onClose()
-
-        setLabel("")
-        setValue("")
-        setEmail("")
-        setWebsite("")
-        setNotes("")
-        setUsername("")
-        setIcon(undefined)
     }
 
     return (
@@ -58,7 +50,7 @@ export default ({ isOpen, onClose }) => {
             <ModalOverlay />
             <ModalContent bg="menuBackground">
                 <ModalHeader>
-                    New Password
+                    Edit Password
                     <ModalCloseButton />
                 </ModalHeader>
                 <ModalBody>
@@ -125,7 +117,7 @@ export default ({ isOpen, onClose }) => {
                     </Flex>
                 </ModalBody>
                 <ModalFooter>
-                    <IconButton icon={<AiOutlinePlus />} colorScheme="green" aria-label="add-pass-button" isLoading={loading} onClick={handleAdd} />
+                    <IconButton icon={<AiFillEdit />} colorScheme="green" aria-label="add-pass-button" isLoading={loading} onClick={handleEdit} />
                 </ModalFooter>
             </ModalContent>
         </Modal>

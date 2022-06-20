@@ -1,8 +1,8 @@
-import { app, dialog } from "electron"
+import { app, dialog, OpenDialogSyncOptions } from "electron"
 import fs from "fs"
 
 export default {
-    select: (extraOptions?) => {
+    select: (extraOptions?: OpenDialogSyncOptions) => {
         const fp = dialog.showOpenDialogSync({
           title: "Select Password Icon",
           filters: [

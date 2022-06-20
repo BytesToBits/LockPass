@@ -6,4 +6,7 @@ export interface PasswordData {
     website?: string | undefined
     notes?: string | undefined
     icon?: string | undefined
+    edit?: {
+        lastModified?: number
+    }
 }
