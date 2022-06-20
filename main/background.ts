@@ -1,4 +1,4 @@
-import { app, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
 import electronLogger from "electron-log";
@@ -33,18 +33,22 @@ if (isProd) {
     frame: false,
     resizable: false,
     center: true,
-    show: false
+    show: false,
   });
   await splashWindow.loadURL(util.renderPage("splash"))
 
   let mainWindow = createWindow('main', {
-    minWidth: 650,
-    minHeight: 400,
+    minWidth: 1000,
+    minHeight: 600,
     center: true,
     show: false,
     frame: false
   })
   mainWindow.loadURL(util.renderPage("main"))
+
+  splashWindow.on('close', () => {
+    if(mainWindow) mainWindow.show()
+  })
 
   autoUpdater.on("update-not-available", () => {
     splashWindow.webContents.send("load-window")

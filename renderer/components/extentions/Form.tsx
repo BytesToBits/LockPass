@@ -4,7 +4,7 @@ const activeLabelStyles = {
 
 export default {
     variants: {
-      floating: {
+      floating: ({ labelColor, labelExtra }) => ({
         container: {
           _focusWithin: {
             label: {
@@ -14,19 +14,20 @@ export default {
           "input:not(:placeholder-shown) + label, .chakra-select__wrapper + label": {
             ...activeLabelStyles
           },
-          label: {
+          label: (props) => ({
             top: 0,
             left: 0,
             zIndex: 2,
             position: "absolute",
-            backgroundColor: "background",
+            backgroundColor: labelColor || "darkBackground",
             pointerEvents: "none",
             mx: 3,
             px: 1,
             my: 2,
-            transformOrigin: "left top"
-          }
+            transformOrigin: "left top",
+            ...labelExtra
+          })
         }
-      }
+      })
     }
   }

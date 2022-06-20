@@ -25,7 +25,6 @@ export default function Menu() {
                 top={0}
                 h={MAX_HEIGHT}
                 bg="#1e1e1e"
-                mb={2}
                 className={"e-drag"}
                 justifyContent={"space-between"}
                 alignItems={"center"}

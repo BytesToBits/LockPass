@@ -5,8 +5,8 @@ export default function BaseLayout({ children }) {
   return (
     <>
       <Menu />
-      <Container maxW={"100vw"}  centerContent >
-        <Box>
+      <Container centerContent bg="darkBackground" minW="100vw" minH="calc(100vh - 30px)">
+        <Box maxW="100%" maxH="calc(100vh - 30px)">
           <main>{children}</main>
         </Box>
       </Container>

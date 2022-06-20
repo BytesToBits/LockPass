@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
-import { app, ipcMain, Notification } from "electron";
+import { app, dialog, ipcMain, Notification } from "electron";
 import Store from "electron-store";
+import files from "./files";
 import util from "../util";
 
 const passwordStore = new Store({
@@ -24,11 +25,23 @@ const init = () => {
     }
   };
 
-  ipcMain.on("new-password", (event, password) => {
+  ipcMain.on("delete-pass", (_, uuid) => {
+    passwordStore.delete(uuid)
+  });
+
+  ipcMain.handle("pass-request", async () => {
+    return getPasswords();
+  });
+
+  ipcMain.handle("get-version", async() => {
+    return app.getVersion()
+  })
+
+  ipcMain.handle("save-password", async(_, password) => {
     if (!password.label || !password.value) {
       const notif = new Notification({
         title: "Password not saved",
-        body: `Password was saved unsuccessfully! Make sure the password's label AND value are set.`,
+        body: `Password label & value are required.`,
         icon: util.getAsset("icon.ico"),
       });
       notif.show();
@@ -39,24 +52,14 @@ const init = () => {
     // Unique ID for the key to prevent duplicates when referenced by key
     const uniqueID = randomUUID();
 
-    passwordStore.set(uniqueID, {
-      label: password.label,
-      name: password.name ? password.name : "No Username",
-      value: password.value,
-    })
+    passwordStore.set(uniqueID, password)
+
+    return true
   });
 
-  ipcMain.on("delete-pass", (event, uuid) => {
-    passwordStore.delete(uuid)
-  });
+  ipcMain.handle("select-file", async() => files.select())
 
-  ipcMain.handle("pass-request", async (event) => {
-    return getPasswords();
-  });
-
-  ipcMain.handle("get-version", async(event) => {
-    return app.getVersion()
-  })
+  ipcMain.handle("save-file", async(_, path) => files.save(path, "testPy.png"))
 };
 
 export default {

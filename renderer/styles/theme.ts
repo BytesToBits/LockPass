@@ -16,7 +16,9 @@ const components = {
 }
 
 const colors = {
-    background: "#0e0e0e",
+    background: "#636363",
+    darkBackground: "#0e0e0e",
+    menuBackground: "#1e1e1e",
     tomato: "#fb6c6e"
 }
 
