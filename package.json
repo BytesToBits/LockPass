@@ -2,7 +2,7 @@
   "private": true,
   "name": "lock-pass",
   "description": "A simple password manager",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": "Nemika Hajbour <nemika@bytestobits.dev>",
   "repository": {
     "type": "git",

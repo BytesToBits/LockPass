@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, ipcMain } from 'electron';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
 import electronLogger from "electron-log";
@@ -7,9 +7,12 @@ import ipcEvents from './helpers/ipcEvents';
 import tray from './helpers/tray';
 import util, { isProd } from './util';
 import apiEvents from './helpers/apiEvents';
+import userSettings from "./helpers/userSettings"
 
 // AUTO UPDATER
 autoUpdater.logger = electronLogger
+
+autoUpdater.allowPrerelease = userSettings.get("beta")
 
 // @ts-ignore
 autoUpdater.logger.transports.file.level = "info"
@@ -45,12 +48,12 @@ if (isProd) {
     show: false,
     frame: false
   })
-  mainWindow.loadURL(util.renderPage("main"))
+  mainWindow.loadURL(util.renderPage("home"))
 
   splashWindow.on('close', () => {
     if(mainWindow) mainWindow.show()
   })
-
+  
   autoUpdater.on("update-not-available", () => {
     splashWindow.webContents.send("load-window")
   })

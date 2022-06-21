@@ -1,9 +1,10 @@
 import { randomUUID } from "crypto";
-import { app, dialog, ipcMain, Notification } from "electron";
+import { app, ipcMain, Notification } from "electron";
 import Store from "electron-store";
 import files from "./files";
 import util from "../util";
 import { PasswordData } from "../../renderer/util/interfaces";
+import userSettings from "./userSettings"
 
 const passwordStore = new Store({
   name: 'passwords'
@@ -74,7 +75,8 @@ const init = () => {
 
   ipcMain.handle("select-file", async (_, options) => files.select(options))
 
-  ipcMain.handle("save-file", async (_, path) => files.save(path, "testPy.png"))
+  ipcMain.handle("get-setting", async(_, name) => userSettings.get(name))
+  ipcMain.handle("update-setting", async(_, name, value) => userSettings.set(name, value))
 };
 
 export default {
