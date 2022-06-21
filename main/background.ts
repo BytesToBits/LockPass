@@ -6,6 +6,7 @@ import { autoUpdater, UpdateInfo } from "@imjs/electron-differential-updater"
 import ipcEvents from './helpers/ipcEvents';
 import tray from './helpers/tray';
 import util, { isProd } from './util';
+import apiEvents from './helpers/apiEvents';
 
 // AUTO UPDATER
 autoUpdater.logger = electronLogger
@@ -117,6 +118,7 @@ if (isProd) {
 
   await tray.init()
   ipcEvents.init()
+  apiEvents.init()
   
 
 })();
