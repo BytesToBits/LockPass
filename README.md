@@ -12,11 +12,13 @@
 - Whenever there is a new release, the application will update automatically.
 - Passwords are saved __locally__, so there is no fear of having them leaked online.
 
-## To-Do
-- Improve the overall design
-- Settings panel allowing more features to be used
-- A more protective way of storing passwords (encryptions & user pin)
-
+## To-Do (v1.6.0 -> v2.0.0)
+- [ ] Improve Home Design
+- [ ] Improve Password Preview Design
+- [ ] A more protective way of storing passwords (encryptions & user pin)
+- [ ] More customization settings
+- [ ] Organize/Clean code files
+- [ ] Add an accounts feature to store passwords online
 
 # **Contributions**
 All contributions are welcome! Feel free to work on any of the above To-Do features. Make sure, however, that your commit messages follow the guidelines below to make it easier for us to track. *it's fine if you don't*
