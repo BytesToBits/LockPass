@@ -77,7 +77,7 @@ export default () => {
 
     })
 
-    const PassBox = ({ uuid, data, filter }) => {
+    const PassBox = ({ uuid, data }) => {
         const password: PasswordData = data
 
         const extra = password.website || password.email || password.notes || `${data.label} Password`
@@ -144,7 +144,7 @@ export default () => {
                             <Box>
                                 <Text fontWeight="bold">{key}</Text>
                                 <Box>
-                                    {displayList[key].filter((uuid) => searchFilter ? passList[uuid].label.includes(searchFilter) : true).map((uuid) => <PassBox uuid={uuid} data={passList[uuid]} filter={searchFilter} />)}
+                                    {displayList[key].filter((uuid) => searchFilter ? passList[uuid].label.includes(searchFilter) : true).map((uuid) => <PassBox uuid={uuid} data={passList[uuid]} />)}
                                 </Box>
                             </Box>
                         ))}
@@ -161,7 +161,7 @@ export default () => {
                     overflowY="auto"
                     overflowX={"hidden"}
                 >
-                    {selected && <ManagePassword data={passList[selected]} uuid={selected} setSelected={setSelected} />}
+                    {selected && <ManagePassword key={selected} data={passList[selected]} uuid={selected} setSelected={setSelected} />}
                 </Flex>
             </Flex>
         </Main>
