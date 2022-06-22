@@ -19,6 +19,7 @@
 - [ ] More customization settings
 - [ ] Organize/Clean code files
 - [ ] Add an accounts feature to store passwords online
+- [ ] Bin (Tab to see & be able to restore old passwords within 30 days of deletion)
 
 # **Contributions**
 All contributions are welcome! Feel free to work on any of the above To-Do features. Make sure, however, that your commit messages follow the guidelines below to make it easier for us to track. *it's fine if you don't*
